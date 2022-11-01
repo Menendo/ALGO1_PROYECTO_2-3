@@ -25,49 +25,66 @@ const int EXTINTORES_TERCER_NIVEL = 2;
 const int MARTILLOS_SEGUNDO_NIVEL_JASMIN = 6;
 const int MARTILLOS_TERCER_NIVEL_JASMIN = 7;
 
+//Pre Debe recibir el juego por referencia
+//Post Setea las condiciones del jugador en el segundo nivel cuando el personaje tocado es jasmin
+void set_condiciones_jasmin_segundo_nivel (juego_t* juego){
+    (juego)->jugador.posicion = juego->niveles[POSICION_SEGUNDO_NIVEL].pos_inicial_jugador;
+    (juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_SEGUNDO_NIVEL);
+    (juego)->jugador.martillos = MARTILLOS_SEGUNDO_NIVEL_JASMIN;
+    (juego)->jugador.extintores = EXTINTORES_SEGUNDO_NIVEL;
+    (juego)->jugador.ahuyenta_randall = true;
+    (juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+}
+
+//Pre Debe recibir el juego por referencia
+//Post Setea las condiciones del jugador en el tercer nivel cuando el personaje tocado es jasmin
+void set_condiciones_jasmin_tercer_nivel (juego_t* juego){
+    (juego)->jugador.posicion = juego->niveles[POSICION_TERCER_NIVEL].pos_inicial_jugador;
+    (juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_TERCER_NIVEL);
+    (juego)->jugador.martillos = MARTILLOS_TERCER_NIVEL_JASMIN;
+    (juego)->jugador.extintores = EXTINTORES_TERCER_NIVEL;
+    (juego)->jugador.ahuyenta_randall = true;
+    (juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+}
+
+//Pre Debe recibir el juego por referencia
+//Post Setea las condiciones del jugador en el segundo nivel
+void set_condiciones_segundo_nivel (juego_t* juego){
+    (juego)->jugador.posicion = juego->niveles[POSICION_SEGUNDO_NIVEL].pos_inicial_jugador;
+    (juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_SEGUNDO_NIVEL);
+    (juego)->jugador.martillos = MARTILLOS_SEGUNDO_NIVEL;
+    (juego)->jugador.extintores = EXTINTORES_SEGUNDO_NIVEL;
+    (juego)->jugador.ahuyenta_randall = true;
+    (juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+}
+
+//Pre Debe recibir el juego por referencia
+//Post Setea las condiciones del jugador en el tercer nivel cuando el personaje tocado es jasmin
+void set_condiciones_tercer_nivel (juego_t* juego){
+        (juego)->jugador.posicion = juego->niveles[POSICION_TERCER_NIVEL].pos_inicial_jugador;
+        (juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_TERCER_NIVEL);
+        (juego)->jugador.martillos = MARTILLOS_TERCER_NIVEL;
+        (juego)->jugador.extintores = EXTINTORES_TERCER_NIVEL;
+        (juego)->jugador.ahuyenta_randall = true;
+        (juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+}
+
 //Pre: Debe recibir la variable juego por parametro para hacer los respectivos cambios.
-//Post: Aumentara el nivel_actual y seteara las reglas y las condiciones propias de ese nivel.
+//Post: Aumentará el nivel_actual y llamara a la funcion correspondiente que seteara las reglas y las condiciones propias de ese nivel.
 void pasar_de_nivel(juego_t* juego){
 	juego->nivel_actual++;
 
 	if ((juego)->personaje_tp1 == JASMIN){
-
 		if ((juego)->nivel_actual == SEGUNDO_NIVEL){
-
-			(juego)->jugador.posicion = juego->niveles[POSICION_SEGUNDO_NIVEL].pos_inicial_jugador;		
-			(juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_SEGUNDO_NIVEL);
-			(juego)->jugador.martillos = MARTILLOS_SEGUNDO_NIVEL_JASMIN;
-			(juego)->jugador.extintores = EXTINTORES_SEGUNDO_NIVEL;
-			(juego)->jugador.ahuyenta_randall = true;
-			(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
-
+            set_condiciones_jasmin_segundo_nivel(juego);
 		} else if ((juego)->nivel_actual == TERCER_NIVEL){
-
-			(juego)->jugador.posicion = juego->niveles[POSICION_TERCER_NIVEL].pos_inicial_jugador;		
-			(juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_TERCER_NIVEL);;
-			(juego)->jugador.martillos = MARTILLOS_TERCER_NIVEL_JASMIN;
-			(juego)->jugador.extintores = EXTINTORES_TERCER_NIVEL;
-			(juego)->jugador.ahuyenta_randall = true;
-			(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+            set_condiciones_jasmin_tercer_nivel(juego);
 		}
 	} else{
 		if ((juego)->nivel_actual == SEGUNDO_NIVEL){
-
-			(juego)->jugador.posicion = juego->niveles[POSICION_SEGUNDO_NIVEL].pos_inicial_jugador;		
-			(juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_SEGUNDO_NIVEL);
-			(juego)->jugador.martillos = MARTILLOS_SEGUNDO_NIVEL;
-			(juego)->jugador.extintores = EXTINTORES_SEGUNDO_NIVEL;
-			(juego)->jugador.ahuyenta_randall = true;
-			(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
-
+            set_condiciones_segundo_nivel(juego);
 		} else if ((juego)->nivel_actual == TERCER_NIVEL){
-
-			(juego)->jugador.posicion = juego->niveles[POSICION_TERCER_NIVEL].pos_inicial_jugador;		
-			(juego)->jugador.movimientos = ((juego)->jugador.movimientos + MOVIMIENTOS_INICIALES_TERCER_NIVEL);;
-			(juego)->jugador.martillos = MARTILLOS_TERCER_NIVEL;
-			(juego)->jugador.extintores = EXTINTORES_TERCER_NIVEL;
-			(juego)->jugador.ahuyenta_randall = true;
-			(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
+            set_condiciones_tercer_nivel(juego);
 		}
 	}
 }
@@ -99,12 +116,9 @@ int main(){
 
 	srand (( unsigned)time(NULL));
 	ejecutar_test_personaje(&inicial_personaje_ayuda);
-	void inicializar_controlador();
 	inicializar_juego(&juego, inicial_personaje_ayuda);
 	imprimir_terreno(juego);
 	correr_juego(&juego);
-
-	void terminar_controlador();
 
  return 0; 
 
