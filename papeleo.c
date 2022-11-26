@@ -122,45 +122,41 @@ const int CANTIDAD_PAPELEOS_STITCH_TERCER_NIVEL = 3;
 const char PARED = '#';
 const char ESPACIO_VACIO_MATRIZ = ' ';
 
+void realizar_llenado_fuegos(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS], int cantidad_de_fuegos){
+    for (int i = 0; i < cantidad_de_fuegos; ++i){
+        obstaculos[i].posicion = coordenadas_fuegos[i];
+        obstaculos[i].tipo = FUEGOS;
+        (*ref_tope_obstaculos)++;
+    }
+}
+
 //Pre:Para inicializar correctamente, el vector coordenadas fuegos debe estar cargado previamente con la cantidad de coordendas necesarias y la variable numero nivel debera tener un valor de entre 1 y 3 inclusives
 //Pos:Procedimiento que inicializara los fuegos correspondientes al nivel, dandoles una coordenada aleatoria del vector coordenadas fuegos y asignandoles el tipo "fuegos". Este solo se activara si el personaje del tp1 es olaf
 void llenar_obstaculos_con_fuegos_olaf(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS], int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		for (int i = 0; i < CANTIDAD_DE_FUEGOS_OLAF_PRIMER_NIVEL; ++i){
-			obstaculos[i].posicion = coordenadas_fuegos[i];
-			obstaculos[i].tipo = FUEGOS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_fuegos(obstaculos, ref_tope_obstaculos, coordenadas_fuegos, CANTIDAD_DE_FUEGOS_OLAF_PRIMER_NIVEL);
 	} else if (numero_nivel == SEGUNDO_NIVEL){
-		for (int i = 0; i < CANTIDAD_DE_FUEGOS_OLAF_SEGUNDO_NIVEL; ++i){
-			obstaculos[i].posicion = coordenadas_fuegos[i];
-			obstaculos[i].tipo = FUEGOS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_fuegos(obstaculos, ref_tope_obstaculos, coordenadas_fuegos, CANTIDAD_DE_FUEGOS_OLAF_SEGUNDO_NIVEL);
 	}
+}
+
+void realizar_llenado_medias(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int
+contador_numeros_aleatorios, int cantidad_de_medias){
+    for (int i = *ref_tope_obstaculos; i < cantidad_de_medias; ++i){
+        contador_numeros_aleatorios++;
+        obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
+        obstaculos[i].tipo = MEDIAS;
+        (*ref_tope_obstaculos)++;
+    }
 }
 
 //Pre:Para inicializar correctamente, el vector coordenadas aleatorias debe estar cargado previamente con la cantidad de coordendas necesarias y la variable numero nivel debera tener un valor de entre 1 y 3 inclusives
 //Pos:Procedimiento que inicializara las medias correspondientes al nivel, dandoles una coordenada aleatoria del vector coordenadas aleatorias y asignandoles el tipo "medias". Este solo se activara si el personaje del tp1 es olaf
 void llenar_obstaculos_con_medias_olaf(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = *ref_tope_obstaculos; i < CANTIDAD_DE_OBSTACULOS_OLAF_PRIMER_NIVEL; ++i){
-			contador_numeros_aleatorios++;
-			obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			obstaculos[i].tipo = MEDIAS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_medias(obstaculos, ref_tope_obstaculos, coordenadas_aleatorias, 0, CANTIDAD_DE_OBSTACULOS_OLAF_PRIMER_NIVEL);
 	} else if (numero_nivel == SEGUNDO_NIVEL){
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = *ref_tope_obstaculos; i < CANTIDAD_DE_OBSTACULOS_OLAF_SEGUNDO_NIVEL; ++i){
-			contador_numeros_aleatorios++;
-			obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			obstaculos[i].tipo = MEDIAS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_medias(obstaculos, ref_tope_obstaculos, coordenadas_aleatorias, 0, CANTIDAD_DE_OBSTACULOS_OLAF_SEGUNDO_NIVEL);
 	}
 }
 
@@ -168,29 +164,11 @@ void llenar_obstaculos_con_medias_olaf(objeto_t obstaculos[MAX_OBSTACULOS], int*
 //Pos:Procedimiento que inicializara las medias correspondientes al nivel, dandoles una coordenada aleatoria del vector coordenadas fuegos y asignandoles el tipo "fuego".
 void llenar_obstaculos_con_fuegos(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS], int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		for (int i = 0; i < CANTIDAD_DE_FUEGOS_PRIMER_NIVEL; ++i){
-			obstaculos[i].posicion = coordenadas_fuegos[i];
-			obstaculos[i].tipo = FUEGOS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_fuegos(obstaculos, ref_tope_obstaculos, coordenadas_fuegos, CANTIDAD_DE_FUEGOS_PRIMER_NIVEL);
 	} else if (numero_nivel == SEGUNDO_NIVEL){
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = *ref_tope_obstaculos; i < CANTIDAD_DE_OBSTACULOS_SEGUNDO_NIVEL; ++i){
-			obstaculos[i].posicion = coordenadas_fuegos[contador_numeros_aleatorios];
-			obstaculos[i].tipo = FUEGOS;
-			contador_numeros_aleatorios++;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_fuegos(obstaculos, ref_tope_obstaculos, coordenadas_fuegos, CANTIDAD_DE_OBSTACULOS_SEGUNDO_NIVEL);
 	} else{
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = *ref_tope_obstaculos; i < CANTIDAD_DE_OBSTACULOS_TERCER_NIVEL; ++i){
-			obstaculos[i].posicion = coordenadas_fuegos[contador_numeros_aleatorios];
-			obstaculos[i].tipo = FUEGOS;
-			contador_numeros_aleatorios++;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_fuegos(obstaculos, ref_tope_obstaculos, coordenadas_fuegos, CANTIDAD_DE_OBSTACULOS_TERCER_NIVEL);
 	}
 }
 
@@ -198,129 +176,79 @@ void llenar_obstaculos_con_fuegos(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_
 //Pos:Procedimiento que inicializara las medias correspondientes al nivel, dandoles una coordenada aleatoria del vector coordenadas aleatorias y asignandoles el tipo "medias".
 void llenar_obstaculos_con_medias(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = *ref_tope_obstaculos; i < CANTIDAD_DE_OBSTACULOS_PRIMER_NIVEL; ++i){		
-			contador_numeros_aleatorios++;
-			obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			obstaculos[i].tipo = MEDIAS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_medias(obstaculos, ref_tope_obstaculos, coordenadas_aleatorias, 0, CANTIDAD_DE_OBSTACULOS_PRIMER_NIVEL);
 	} else if (numero_nivel == SEGUNDO_NIVEL){
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = 0; i < CANTIDAD_DE_MEDIAS_SEGUNDO_NIVEL; ++i){
-			contador_numeros_aleatorios++;
-			obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			obstaculos[i].tipo = MEDIAS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_medias(obstaculos, ref_tope_obstaculos, coordenadas_aleatorias, 0, CANTIDAD_DE_MEDIAS_SEGUNDO_NIVEL);
 	} else{
-		int contador_numeros_aleatorios = 0;
-
-		for (int i = 0; i < CANTIDAD_DE_MEDIAS_TERCER_NIVEL ; ++i){
-			contador_numeros_aleatorios++;
-			obstaculos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			obstaculos[i].tipo = MEDIAS;
-			(*ref_tope_obstaculos)++;		
-		}
+        realizar_llenado_medias(obstaculos, ref_tope_obstaculos, coordenadas_aleatorias, 0, CANTIDAD_DE_MEDIAS_TERCER_NIVEL);
 	}
+}
+
+void realizar_llenado_botellas(objeto_t herramientas[MAX_HERRAMIENTAS], int* ref_tope_herramientas, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int
+contador_numeros_aleatorios, int cantidad_de_botellas){
+    for (int i = 0; i < cantidad_de_botellas; ++i){
+        herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
+        herramientas[i].tipo = BOTELLAS_GRITOS;
+        contador_numeros_aleatorios++;
+        (*ref_tope_herramientas)++;
+    }
 }
 
 //Pre:Para inicializar correctamente, el vector coordenadas aleatorias debe estar cargado previamente con la cantidad de coordendas necesarias y la variable numero nivel debera tener un valor de entre 1 y 3 inclusives
 //Pos:Procedimiento que inicializara las botellas correspondientes al nivel , dandoles una coordenada aleatoria del vector coordenadas aleatorias y asignandoles el tipo "botellas gritos".
 void llenar_herramientas_con_botellas(objeto_t herramientas[MAX_HERRAMIENTAS], int* ref_tope_herramientas, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS],int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		int contador_numeros_aleatorios = 6;
-
-		for (int i = 0; i < CANTIDAD_DE_BOTELLAS_PRIMER_NIVEL; ++i){
-			herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			herramientas[i].tipo = BOTELLAS_GRITOS;
-			contador_numeros_aleatorios++;
-			(*ref_tope_herramientas)++; 	
-		}
+        realizar_llenado_botellas(herramientas, ref_tope_herramientas, coordenadas_aleatorias, 6, CANTIDAD_DE_BOTELLAS_PRIMER_NIVEL);
 	} else if(numero_nivel == SEGUNDO_NIVEL){
-		int contador_numeros_aleatorios = 5;
-
-		for (int i = 0; i < CANTIDAD_DE_BOTELLAS_SEGUNDO_NIVEL; ++i){
-			herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			herramientas[i].tipo = BOTELLAS_GRITOS;
-			contador_numeros_aleatorios++;
-			(*ref_tope_herramientas)++; 	
-		}
+        realizar_llenado_botellas(herramientas, ref_tope_herramientas, coordenadas_aleatorias, 5, CANTIDAD_DE_BOTELLAS_SEGUNDO_NIVEL);
 	} else{
-		int contador_numeros_aleatorios = 4;
-
-		for (int i = 0; i < CANTIDAD_DE_BOTELLAS_TERCER_NIVEL; ++i){
-			herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			herramientas[i].tipo = BOTELLAS_GRITOS;
-			contador_numeros_aleatorios++;
-			(*ref_tope_herramientas)++; 	
-		}
+        realizar_llenado_botellas(herramientas, ref_tope_herramientas, coordenadas_aleatorias, 4, CANTIDAD_DE_BOTELLAS_TERCER_NIVEL);
 	}
+}
+
+void realizar_llenado_heramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int* ref_tope_herramientas, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int
+contador_numeros_aleatorios, int cantidad_de_herramientas){
+    for (int i = *ref_tope_herramientas; i < cantidad_de_herramientas; ++i){
+        herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
+        herramientas[i].tipo = AHUYENTA_RANDALL;
+        (*ref_tope_herramientas)++;
+        contador_numeros_aleatorios++;
+    }
 }
  
 //Pre:Para inicializar correctamente, el vector coordenadas aleatorias debe estar cargado previamente con la cantidad de coordendas necesarias y la variable numero nivel debera tener un valor de entre 1 y 3 inclusives
 //Pos:Procedimiento que inicializara los interruptores randall correspondientes al nivel , dandoles una coordenada aleatoria del vector coordenadas aleatorias y asignandoles el tipo "ahuyenta randall".
 void llenar_herramientas_con_interruptores(objeto_t herramientas[MAX_HERRAMIENTAS], int* ref_tope_herramientas, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int numero_nivel){
 	 if (numero_nivel == PRIMER_NIVEL){
-	 	int contador_numeros_aleatorios = 10;
-		for (int i = *ref_tope_herramientas; i < CANTIDAD_DE_HERRAMIENTAS_PRIMER_NIVEL; ++i){
-			herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			herramientas[i].tipo = AHUYENTA_RANDALL;
-			(*ref_tope_herramientas)++;
-			contador_numeros_aleatorios++;
-		}
+         realizar_llenado_heramientas(herramientas, ref_tope_herramientas, coordenadas_aleatorias, 10, CANTIDAD_DE_HERRAMIENTAS_PRIMER_NIVEL);
 	 } else if (numero_nivel == SEGUNDO_NIVEL){
-	 	int contador_numeros_aleatorios = 8;
-		for (int i = *ref_tope_herramientas; i < CANTIDAD_DE_HERRAMIENTAS_SEGUNDO_NIVEL; ++i){
-			herramientas[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			herramientas[i].tipo = AHUYENTA_RANDALL;
-			(*ref_tope_herramientas)++;
-			contador_numeros_aleatorios++;
-		}
+         realizar_llenado_heramientas(herramientas, ref_tope_herramientas, coordenadas_aleatorias, 8, CANTIDAD_DE_HERRAMIENTAS_SEGUNDO_NIVEL);
 	}
 }
 
+void realizar_llenado_papeleos(papeleo_t papeleos[MAX_PAPELEOS], int* ref_tope_papeleos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int contador_numeros_aleatorios, int
+cantidad_de_papeleos){
+    int id_papeleos = ID_PRIMER_PAPELEO;
+
+    for (int i = 0; i < cantidad_de_papeleos; ++i){
+        papeleos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
+        papeleos[i].id_papeleo = id_papeleos;
+        papeleos[i].recolectado = NO_RECOLECTADO;
+        contador_numeros_aleatorios++;
+        id_papeleos++;
+        (*ref_tope_papeleos)++;
+    }
+}
+
 //Pre:Para inicializar correctamente, el vector coordenadas aleatorias debe estar cargado previamente con la cantidad de coordendas necesarias y la variable numero nivel debera tener un valor de entre 1 y 3 inclusives
-//Pos:Procedimiento que inicializara los papeleos correspondientes al nivel , dandoles una coordenada aleatoria del vector coordenadas aleatorias, su id propio de cada papeleo y su estado de recoleccion.
+//Pos:Procedimiento que inicializara los papeleos correspondientes al nivel, dandoles una coordenada aleatoria del vector coordenadas aleatorias, su id propio de cada papeleo y su estado de recoleccion.
 void llenar_papeleos(papeleo_t papeleos[MAX_PAPELEOS], int* ref_tope_papeleos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int numero_nivel){
 	if (numero_nivel == PRIMER_NIVEL){
-		int contador_numeros_aleatorios = 11;
-		int id_papeleos = ID_PRIMER_PAPELEO;
-
-		for (int i = 0; i < CANTIDAD_DE_PAPELEOS_PRIMER_NIVEL; ++i){
-			papeleos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			papeleos[i].id_papeleo = id_papeleos;
-			papeleos[i].recolectado = NO_RECOLECTADO;
-			contador_numeros_aleatorios++;
-			id_papeleos++;
-			(*ref_tope_papeleos)++;
-		}
+        realizar_llenado_papeleos(papeleos, ref_tope_papeleos, coordenadas_aleatorias, 11, CANTIDAD_DE_PAPELEOS_PRIMER_NIVEL);
 	} else if (numero_nivel == SEGUNDO_NIVEL){
-		int contador_numeros_aleatorios = 9;
-		int id_papeleos = ID_PRIMER_PAPELEO;
-
-		for (int i = 0; i < CANTIDAD_DE_PAPELEOS_SEGUNDO_NIVEL; ++i){
-			papeleos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			papeleos[i].id_papeleo = id_papeleos;
-			papeleos[i].recolectado = NO_RECOLECTADO;
-			contador_numeros_aleatorios++;
-			id_papeleos++;
-			(*ref_tope_papeleos)++;
-		}
+        realizar_llenado_papeleos(papeleos, ref_tope_papeleos, coordenadas_aleatorias, 9, CANTIDAD_DE_PAPELEOS_SEGUNDO_NIVEL);
 	} else {
-		int contador_numeros_aleatorios = 6;
-		int id_papeleos = ID_PRIMER_PAPELEO;
-
-		for (int i = 0; i < CANTIDAD_DE_PAPELEOS_TERCER_NIVEL; ++i){
-			papeleos[i].posicion = coordenadas_aleatorias[contador_numeros_aleatorios];
-			papeleos[i].id_papeleo = id_papeleos;
-			papeleos[i].recolectado = NO_RECOLECTADO;
-			contador_numeros_aleatorios++;
-			id_papeleos++;
-			(*ref_tope_papeleos)++;
-		}
+        realizar_llenado_papeleos(papeleos, ref_tope_papeleos, coordenadas_aleatorias, 6, CANTIDAD_DE_PAPELEOS_TERCER_NIVEL);
 	}
 }
 
@@ -340,91 +268,56 @@ void llenar_papeleos_stitch(papeleo_t papeleos[MAX_PAPELEOS], int* ref_tope_pape
 	}
 }
 
+void inicializar_elementos_nivel_uno_dos(nivel_t* nivel, int numero_nivel, char personaje_tp1, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS]){
+
+    if (personaje_tp1 == OLAF){
+        llenar_obstaculos_con_medias_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
+        llenar_obstaculos_con_fuegos_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
+    } else {
+        llenar_obstaculos_con_fuegos(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
+        llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
+    }
+
+    llenar_herramientas_con_botellas(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
+    llenar_herramientas_con_interruptores(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
+    llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
+}
+
+void inicializar_elementos_nivel_tres(nivel_t* nivel, int numero_nivel, char personaje_tp1, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS],
+ coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS]){
+    llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
+    llenar_obstaculos_con_fuegos(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
+    llenar_herramientas_con_botellas(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
+
+    if (personaje_tp1 == STITCH){
+        llenar_papeleos_stitch(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias);
+    } else {
+        llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
+    }
+
+}
+
 void inicializar_nivel(nivel_t* nivel, int numero_nivel, char personaje_tp1){
-	if (numero_nivel == PRIMER_NIVEL){
+    nivel->tope_paredes = 0;
+    nivel->tope_obstaculos = 0;
+    nivel->tope_herramientas = 0;
+    nivel->tope_papeleos = 0;
 
-		nivel->tope_paredes = 0;				
-		nivel->tope_obstaculos = 0;	
-		nivel->tope_herramientas = 0;
-		nivel->tope_papeleos = 0;
+    obtener_paredes(numero_nivel, nivel->paredes, &(nivel->tope_paredes), &(nivel->pos_inicial_jugador));
 
-		obtener_paredes(numero_nivel, nivel->paredes, &(nivel->tope_paredes), &(nivel->pos_inicial_jugador));
+    coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS];
+    int tope_coord_aleatorias = 0;
+    coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS];
+    int tope_coord_fuegos = 0;
 
-		coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS];
-		int tope_coord_aleatorias = 0;
-		coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS];
-		int tope_coord_fuegos = 0;
+    obtener_coordenadas_aleatorias(coordenadas_aleatorias,nivel->paredes, &tope_coord_aleatorias, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
+    obtener_coordenadas_fuegos(coordenadas_aleatorias, nivel->paredes, coordenadas_fuegos, tope_coord_aleatorias, &tope_coord_fuegos, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
 
-		obtener_coordenadas_aleatorias(coordenadas_aleatorias,nivel->paredes, &tope_coord_aleatorias, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-		obtener_coordenadas_fuegos(coordenadas_aleatorias, nivel->paredes, coordenadas_fuegos, tope_coord_aleatorias, &tope_coord_fuegos, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-		
-		if (personaje_tp1 == OLAF){
-			llenar_obstaculos_con_medias_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
-			llenar_obstaculos_con_fuegos_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
-		} else {
-			llenar_obstaculos_con_fuegos(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
-			llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
-		}
-		
-		llenar_herramientas_con_botellas(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
-		llenar_herramientas_con_interruptores(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
-		llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
-
-	} else if (numero_nivel == SEGUNDO_NIVEL){
-
-		nivel->tope_paredes = 0;
-		nivel->tope_obstaculos = 0;
-		nivel->tope_herramientas = 0;
-		nivel->tope_papeleos = 0;
-
-		obtener_paredes(numero_nivel, nivel->paredes, &(nivel->tope_paredes), &(nivel->pos_inicial_jugador));
-
-		coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS];
-		int tope_coord_aleatorias = 0;
-		coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS];
-		int tope_coord_fuegos = 0;
-
-		obtener_coordenadas_aleatorias(coordenadas_aleatorias, nivel->paredes, &tope_coord_aleatorias, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-		obtener_coordenadas_fuegos(coordenadas_aleatorias, nivel->paredes, coordenadas_fuegos, tope_coord_aleatorias, &tope_coord_fuegos, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-
-		if (personaje_tp1 == OLAF){
-			llenar_obstaculos_con_fuegos_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
-			llenar_obstaculos_con_medias_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
-		} else{
-			llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
-			llenar_obstaculos_con_fuegos(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
-		}
-
-		llenar_herramientas_con_botellas(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
-		llenar_herramientas_con_interruptores(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
-		llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
-
-	} else{
-		
-		nivel->tope_paredes = 0;
-		nivel->tope_obstaculos = 0;
-		nivel->tope_herramientas = 0;
-		nivel->tope_papeleos = 0;
-
-		obtener_paredes(numero_nivel, nivel->paredes, &(nivel->tope_paredes), &(nivel->pos_inicial_jugador));
-
-		coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS];
-		int tope_coord_aleatorias = 0;
-		coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS];
-		int tope_coord_fuegos = 0;
-
-		obtener_coordenadas_aleatorias(coordenadas_aleatorias, nivel->paredes, &tope_coord_aleatorias, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-		obtener_coordenadas_fuegos(coordenadas_aleatorias, nivel->paredes, coordenadas_fuegos, tope_coord_aleatorias, &tope_coord_fuegos, nivel->pos_inicial_jugador, nivel->tope_paredes, numero_nivel);
-		
-		llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
-		llenar_obstaculos_con_fuegos(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
-		llenar_herramientas_con_botellas(nivel->herramientas, &(nivel->tope_herramientas), coordenadas_aleatorias, numero_nivel);
-		if (personaje_tp1 == STITCH){
-			llenar_papeleos_stitch(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias);
-		} else {
-			llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
-		}
-	}	
+    if (numero_nivel == PRIMER_NIVEL || numero_nivel == SEGUNDO_NIVEL){
+        inicializar_elementos_nivel_uno_dos(nivel, numero_nivel, personaje_tp1, coordenadas_aleatorias, coordenadas_fuegos);
+    } else {
+        inicializar_elementos_nivel_tres(nivel, numero_nivel, personaje_tp1, coordenadas_aleatorias, coordenadas_fuegos);
+    }
 }
 
 //Pre:la variable personaje_tp1 debe estar incializada con el personaje correspondiente del tp1
@@ -454,7 +347,6 @@ int define_movimientos_iniciales_primer_nivel(char personaje_tp1){
 }
 
 void inicializar_juego(juego_t* juego, char personaje_tp1){
-
 	int numero_primer_nivel = PRIMER_NIVEL;	
 	int numero_segundo_nivel = SEGUNDO_NIVEL;	
 	int numero_tercer_nivel = TERCER_NIVEL;
@@ -463,7 +355,7 @@ void inicializar_juego(juego_t* juego, char personaje_tp1){
 	inicializar_nivel(&(juego->niveles[POSICION_SEGUNDO_NIVEL]), numero_segundo_nivel, personaje_tp1);
 	inicializar_nivel(&(juego->niveles[POSICION_TERCER_NIVEL]), numero_tercer_nivel, personaje_tp1);	
 
-	(juego)->nivel_actual = PRIMER_NIVEL;		
+	(juego)->nivel_actual = PRIMER_NIVEL;
 	(juego)->personaje_tp1 = personaje_tp1;
 
 	(juego)->jugador.posicion = juego->niveles[POSICION_PRIMER_NIVEL].pos_inicial_jugador;		
@@ -474,81 +366,133 @@ void inicializar_juego(juego_t* juego, char personaje_tp1){
 	(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
 }
 
+
+void cargar_matriz_espacios_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
+            mapa_primer_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
+        }
+    }
+}
+
+void cargar_matriz_espacios_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
+            mapa_segundo_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
+        }
+    }
+}
+
+void cargar_matriz_espacios_tercer_nivel(char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
+            mapa_tercer_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
+        }
+    }
+}
+
 //Pre:el nivel actual debe tener un valor de entre 1 y 3 inclusives
 //Pos:carga los elementos sin ocupar de la matriz para evitar que haya basura en ella y la devuelve
 void cargar_matriz_espacios(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
-				mapa_primer_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
-			}
-		}
+        cargar_matriz_espacios_primer_nivel(mapa_primer_nivel);
 	} else if (nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
-				mapa_segundo_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
-			}
-		}
+        cargar_matriz_espacios_segundo_nivel(mapa_segundo_nivel);
 	} else {
-		for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
-				mapa_tercer_nivel[i][j] = ESPACIO_VACIO_MATRIZ;
-			}
-		}
+        cargar_matriz_espacios_tercer_nivel(mapa_tercer_nivel);
 	}
+}
+
+
+void cargar_paredes_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_paredes; ++i){
+        mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].paredes[i].fil][niveles[POSICION_PRIMER_NIVEL].paredes[i].col] = PARED;
+    }
+}
+
+void cargar_paredes_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_paredes; ++i){
+        mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].paredes[i].fil][niveles[POSICION_SEGUNDO_NIVEL].paredes[i].col] = PARED;
+    }
+}
+
+void cargar_paredes_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_paredes; ++i){
+        mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].paredes[i].fil][niveles[POSICION_TERCER_NIVEL].paredes[i].col] = PARED;
+    }
 }
 
 //Pre:el vector paredes debe estar previamente inicializado para poder cargarlo a la matriz y el nivel actual debe tener un valor de entre 1 y 3 inclusives
 //Pos:carga las paredes del nivel dado en su matriz correspondiente y devuelve la matriz cargada
 void cargar_matriz_con_paredes(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_paredes; ++i){
-			mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].paredes[i].fil][niveles[POSICION_PRIMER_NIVEL].paredes[i].col] = PARED;
-		}
+        cargar_paredes_primer_nivel(niveles, mapa_primer_nivel);
 	} else if(nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_paredes; ++i){
-			mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].paredes[i].fil][niveles[POSICION_SEGUNDO_NIVEL].paredes[i].col] = PARED;
-		}
+        cargar_paredes_segundo_nivel(niveles, mapa_segundo_nivel);
 	} else {
-		for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_paredes; ++i){
-			mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].paredes[i].fil][niveles[POSICION_TERCER_NIVEL].paredes[i].col] = PARED;
-		}
+        cargar_paredes_tercer_nivel(niveles, mapa_tercer_nivel);
 	}
+}
+
+
+void cargar_obstaculos_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_obstaculos; ++i){
+        mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].obstaculos[i].tipo;
+    }
+}
+
+void cargar_obstaculos_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_obstaculos; ++i){
+        mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].tipo;
+    }
+}
+
+void cargar_obstaculos_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_obstaculos; ++i){
+        mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].obstaculos[i].tipo;
+    }
 }
 
 //Pre:el vector obstaculos debe estar previamente inicializado para poder cargarlo a la matriz y el nivel actual debe tener un valor de entre 1 y 3 inclusives
 //Pos:carga los obstaculos del nivel dado en su matriz correspondiente y devuelve la matriz cargada
 void cargar_matriz_con_obstaculos(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_obstaculos; ++i){
-			mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].obstaculos[i].tipo;
-		}
+        cargar_obstaculos_primer_nivel(niveles, mapa_primer_nivel);
 	} else if (nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_obstaculos; ++i){
-			mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].tipo;
-		}
+        cargar_obstaculos_segundo_nivel(niveles, mapa_segundo_nivel);
 	} else {
-		for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_obstaculos; ++i){
-			mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].obstaculos[i].tipo;
-		}
+        cargar_obstaculos_tercer_nivel(niveles, mapa_tercer_nivel);
 	}
+}
+
+
+void cargar_herramientas_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_herramientas; ++i){
+        mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].herramientas[i].tipo;
+    }
+}
+
+void cargar_herramientas_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_herramientas; ++i){
+        mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].tipo;
+    }
+}
+
+void cargar_herramientas_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
+    for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_herramientas; ++i){
+        mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].herramientas[i].tipo;
+    }
 }
 
 //Pre:el vector herramientas debe estar previamente inicializado para poder cargarlo a la matriz y el nivel actual debe tener un valor de entre 1 y 3 inclusives
 //Pos:carga las herramientas del nivel dado en su matriz correspondiente y devuelve la matriz cargada
 void cargar_matriz_con_herramientas(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_herramientas; ++i){
-			mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].herramientas[i].tipo;
-		}
+        cargar_herramientas_primer_nivel(niveles, mapa_primer_nivel);
 	} else if (nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_herramientas; ++i){
-			mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].tipo;
-		}
+        cargar_herramientas_segundo_nivel(niveles, mapa_segundo_nivel);
 	} else {
-		for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_herramientas; ++i){
-			mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].herramientas[i].tipo;
-		}
+        cargar_herramientas_tercer_nivel(niveles, mapa_tercer_nivel);
 	}
 }
 
@@ -564,33 +508,72 @@ void cargar_matriz_con_pos(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[
 	}
 }
 
+void cargar_matriz_con_papeleos_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], int* id_papeleos){
+    for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_papeleos; ++i){
+        if (!niveles[POSICION_PRIMER_NIVEL].papeleos[i].recolectado){
+            mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].papeleos[i].posicion.col] = (char)(*id_papeleos);
+        }
+        (*id_papeleos)++;
+    }
+}
+
+void cargar_matriz_con_papeleos_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], int* id_papeleos){
+    for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_papeleos; ++i){
+        if (!niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].recolectado){
+            mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].posicion.col] = (char)(*id_papeleos);
+        }
+        (*id_papeleos)++;
+    }
+}
+
+void cargar_matriz_con_papeleos_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int* id_papeleos){
+    for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_papeleos; ++i){
+        if (!niveles[POSICION_TERCER_NIVEL].papeleos[i].recolectado){
+            mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].papeleos[i].posicion.col] = (char)(*id_papeleos);
+        }
+        (*id_papeleos)++;
+    }
+}
+
 //Pre:el vector papeleos debe estar previamente inicializado para poder cargarlo a la matriz y nivel actual debe tener un valor del 1 al 3 inclusives
 //Pos:Carga la matriz con los papeleos correspondientes al nivel dado
 void cargar_matriz_con_papeleos(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	int id_papeleos = '1';
 
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_papeleos; ++i){
-			if (niveles[POSICION_PRIMER_NIVEL].papeleos[i].recolectado == false){
-				mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].papeleos[i].posicion.col] = (char)id_papeleos;
-			}
-			id_papeleos++;
-		}
+        cargar_matriz_con_papeleos_primer_nivel(niveles, mapa_primer_nivel, &id_papeleos);
 	} else if (nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_papeleos; ++i){
-			if (niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].recolectado == false){
-				mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].posicion.col] = (char)id_papeleos;
-			}
-			id_papeleos++;
-		}
+        cargar_matriz_con_papeleos_segundo_nivel(niveles, mapa_segundo_nivel, &id_papeleos);
 	} else {
-		for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_papeleos; ++i){
-			if (niveles[POSICION_TERCER_NIVEL].papeleos[i].recolectado == false){
-				mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].papeleos[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].papeleos[i].posicion.col] = (char)id_papeleos;
-			}
-			id_papeleos++;
-		}
+        cargar_matriz_con_papeleos_tercer_nivel(niveles, mapa_tercer_nivel, &id_papeleos);
 	}
+}
+
+void imprimir_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
+            printf(" %c", mapa_primer_nivel[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void imprimir_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
+            printf(" %c", mapa_segundo_nivel[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void imprimir_tercer_nivel(char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
+    for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
+        for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
+            printf(" %c", mapa_tercer_nivel[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 //Pre:La matriz correspondiente al nivel debe estar cargada con todas sus caracteristicas y nivel actual debera tener un valor del 1 al 3 inclusives
@@ -604,23 +587,11 @@ void imprimir_juego(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_
 	printf("Martillos restantes: %i\n\n", martillos);
 
 	if (nivel_actual == PRIMER_NIVEL){
-		for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
-				printf(" %c", mapa_primer_nivel[i][j]);
-			}printf("\n");
-		}
+        imprimir_primer_nivel(mapa_primer_nivel);
 	} else if (nivel_actual == SEGUNDO_NIVEL){
-		for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
-				printf(" %c", mapa_segundo_nivel[i][j]);
-			}printf("\n");
-		}
+        imprimir_segundo_nivel(mapa_segundo_nivel);
 	} else {
-		for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
-			for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
-				printf(" %c", mapa_tercer_nivel[i][j]);
-			}printf("\n");
-		}
+        imprimir_tercer_nivel(mapa_tercer_nivel);
 	}
 }
 
@@ -831,9 +802,7 @@ void ejecutar_choque_con_media(int* movimientos){
 //Pre: Debe recibir la posicion del papeleo chocado (mayor o igual a 0) y el vector de papeleos
 //Post: En caso de que el papeleo chocado no tenga sus anteriores ya recogidos, imprime un mensaje de error por pantalla. En caso contrario, elimina logicamente el papeleo marcando como true la variable recolectado.
 void recoger_papeleo(papeleo_t* papeleo, int posicion_papeleo_chocado){
-	if(!(*papeleo).recolectado){
-		printf("El papaleo %i ha sido recolectado \n", (posicion_papeleo_chocado+1));
-	}
+	if(!(*papeleo).recolectado) printf("El papaleo %i ha sido recolectado \n", (posicion_papeleo_chocado+1));
 	(*papeleo).recolectado = true;
 }
 
@@ -886,6 +855,7 @@ bool personaje_tiene_piso(juego_t juego){
 			tiene_piso = true;
 		}
 	}
+
 	return tiene_piso;
 }
 
@@ -903,27 +873,15 @@ void aplicar_gravedad(juego_t* juego){
 //Pre: Debe recibir el nivel actual y la cantidad de movimientos realizados
 //Post: Devuelve true en caso de que se deba generar una pared random y false en caso contrario
 bool se_debe_generar_pared(int nivel_actual, int movimientos_realizados){
-	bool se_debe = false;
-
-	if ((nivel_actual == PRIMER_NIVEL && movimientos_realizados < MOVIMIENTOS_LIMITES_PARA_PAREDES_PRIMER_NIVEL) || (nivel_actual == SEGUNDO_NIVEL && movimientos_realizados <
-    MOVIMIENTOS_LIMITES_PARA_PAREDES_SEGUNDO_NIVEL) || (nivel_actual == TERCER_NIVEL && movimientos_realizados < MOVIMIENTOS_LIMITES_PARA_PAREDES_TERCER_NIVEL)){
-		se_debe = true;
-	}
-
-	return se_debe;
+    return ((nivel_actual == PRIMER_NIVEL && movimientos_realizados < MOVIMIENTOS_LIMITES_PARA_PAREDES_PRIMER_NIVEL) || (nivel_actual == SEGUNDO_NIVEL && movimientos_realizados <
+    MOVIMIENTOS_LIMITES_PARA_PAREDES_SEGUNDO_NIVEL) || (nivel_actual == TERCER_NIVEL && movimientos_realizados < MOVIMIENTOS_LIMITES_PARA_PAREDES_TERCER_NIVEL));
 }
 
 //Pre: Debe recibir el nivel actual, los movimientos realizados, y la variable ahuyenta randall
 //Post: Devuelve true en caso de que se tenga que mover un papeleo y false en caso contrario
 bool se_debe_mover_papeleo(int nivel_actual, int movimientos_realizados, bool ahuyenta_randall){
-	bool se_debe_rotar = false;
-
-	if ((!ahuyenta_randall && nivel_actual == PRIMER_NIVEL && (movimientos_realizados % R_PRIMER_NIVEL) == ES_DIVISIBLE) || (!ahuyenta_randall && nivel_actual == SEGUNDO_NIVEL &&
-    (movimientos_realizados % R_SEGUNDO_NIVEL) == ES_DIVISIBLE) || (!ahuyenta_randall && nivel_actual == TERCER_NIVEL && (movimientos_realizados % R_TERCER_NIVEL) == ES_DIVISIBLE)){
-		se_debe_rotar = true;
-	}
-
-	return se_debe_rotar;
+    return ((!ahuyenta_randall && nivel_actual == PRIMER_NIVEL && (movimientos_realizados % R_PRIMER_NIVEL) == ES_DIVISIBLE) || (!ahuyenta_randall && nivel_actual == SEGUNDO_NIVEL &&
+    (movimientos_realizados % R_SEGUNDO_NIVEL) == ES_DIVISIBLE) || (!ahuyenta_randall && nivel_actual == TERCER_NIVEL && (movimientos_realizados % R_TERCER_NIVEL) == ES_DIVISIBLE));
 }
 
 //Pre: Debe recibir la variable juego
@@ -958,7 +916,7 @@ void ejecutar_consecuencias_indirectas_de_movimiento(juego_t* juego){
 }
 
 //Pre: Debe recibir la accion realizada y la variable juego
-//Post: En caso de el movimiento sea imposible de realizada imprime error, y en caso contrario ejecuta un movimiento y todas sus consecuencias
+//Post: En caso del movimiento sea imposible de realizada imprime error, y en caso contrario ejecuta un movimiento y todas sus consecuencias
 void ejecutar_movimiento(char accion_realizada, juego_t* juego){
 	if(movimiento_es_imposible((*juego).niveles[(*juego).nivel_actual-DESFASAJE_NIVEL], accion_realizada, (*juego).jugador)){
 		imprimir_error_movimiento();
@@ -979,37 +937,102 @@ void ejecutar_movimiento(char accion_realizada, juego_t* juego){
 	}		
 }
 
+
+void definir_fuego_superior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
+    for (int i = 0; i < nivel.tope_obstaculos; ++i){
+        if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil-UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
+            (*fuego_a_apagar) = i;
+        }
+    }
+}
+
+void definir_fuego_inferior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
+    for (int i = 0; i < nivel.tope_obstaculos; ++i){
+        if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil+UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
+            (*fuego_a_apagar) = i;
+        }
+    }
+}
+
+void definir_fuego_derecho_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
+    for (int i = 0; i < nivel.tope_obstaculos; ++i){
+        if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col+UNA_POSICION)){		//CONVERTIR EN CONSTANTE
+            (*fuego_a_apagar) = i;
+        }
+    }
+}
+
+void definir_fuego_izquierdo_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
+    for (int i = 0; i < nivel.tope_obstaculos; ++i){
+        if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col-UNA_POSICION)){
+            (*fuego_a_apagar) = i;
+        }
+    }
+}
+
 //Pre: Debe recibir la accion realizada, el nivel y la variable jugador
 //Post: Devuelve -1 en caso de que no haya fuego a apagar en la direccion ingresada por el usuario y si no, devuelve la posicion del fuego a apagar en el vector de fuegos del respectivo nivel
 int comprueba_si_hay_fuego(char accion_realizada, nivel_t nivel, jugador_t jugador){
 	int fuego_a_apagar = NO_HAY_FUEGO;
 
 	if (accion_realizada == ARRIBA){
-		for (int i = 0; i < nivel.tope_obstaculos; ++i){
-			if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil-UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
-				fuego_a_apagar = i;
-			}	
-		}
+        definir_fuego_superior_a_apagar(&fuego_a_apagar, nivel, jugador);
 	} else if(accion_realizada == ABAJO){
-		for (int i = 0; i < nivel.tope_obstaculos; ++i){
-			if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil+UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
-				fuego_a_apagar = i;
-			}	
-		}
+        definir_fuego_inferior_a_apagar(&fuego_a_apagar, nivel, jugador);
 	} else if(accion_realizada == DERECHA){
-		for (int i = 0; i < nivel.tope_obstaculos; ++i){
-			if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col+UNA_POSICION)){		//CONVERTIR EN CONSTANTE
-				fuego_a_apagar = i;
-			}	
-		}
+        definir_fuego_derecho_a_apagar(&fuego_a_apagar, nivel, jugador);
 	} else{
-		for (int i = 0; i < nivel.tope_obstaculos; ++i){
-			if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col-UNA_POSICION)){
-				fuego_a_apagar = i;
-			}	
-		}
+        definir_fuego_izquierdo_a_apagar(&fuego_a_apagar, nivel, jugador);
 	}
+
 	return fuego_a_apagar;
+}
+
+void definir_limites_mapa(int* ultima_fila_jugable, int* ultima_columna_jugable,int valor_ultima_fila_jugable,int valor_ultima_columna_jugable){
+    (*ultima_fila_jugable) = valor_ultima_fila_jugable;
+    (*ultima_columna_jugable) = valor_ultima_columna_jugable;
+}
+
+void definir_pared_superior_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_columna_jugable){
+    for (int i = 0; i < nivel.tope_paredes; ++i){
+        if(jugador.posicion.fil != PRIMERA_FILA_JUGABLE && nivel.paredes[i].fil == (jugador.posicion.fil-UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){
+            (*pared_a_destruir) = i;
+        }
+    }
+}
+
+void definir_pared_inferior_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_fila_jugable){
+    for (int i = 0; i < nivel.tope_paredes; ++i){
+        if(jugador.posicion.fil != ultima_fila_jugable && nivel.paredes[i].fil == (jugador.posicion.fil+UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){
+            (*pared_a_destruir) = i;
+        }
+    }
+}
+
+void definir_pared_derecha_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_columna_jugable){
+    for (int i = 0; i < nivel.tope_paredes; ++i){
+        if(jugador.posicion.col != ultima_columna_jugable && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col+UNA_POSICION)){
+            (*pared_a_destruir) = i;
+        }
+    }
+}
+
+void definir_pared_izquierda_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador){
+    for (int i = 0; i < nivel.tope_paredes; ++i){
+        if(jugador.posicion.col != PRIMERA_COLUMNA_JUGABLE && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col-UNA_POSICION)){
+            (*pared_a_destruir) = i;
+        }
+    }
+}
+
+void definir_mapa(int* ultima_fila_jugable, int* ultima_columna_jugable, int nivel_actual){
+    if (nivel_actual == PRIMER_NIVEL){
+        definir_limites_mapa(&(*ultima_fila_jugable), &(*ultima_columna_jugable), ULTIMA_FILA_JUGABLE_PRIMER_NIVEL, ULTIMA_COLUMNA_JUGABLE_PRIMER_NIVEL);
+    } else if(nivel_actual == SEGUNDO_NIVEL){
+        definir_limites_mapa(&(*ultima_fila_jugable), &(*ultima_columna_jugable), ULTIMA_FILA_JUGABLE_SEGUNDO_NIVEL, ULTIMA_COLUMNA_JUGABLE_SEGUNDO_NIVEL);
+    } else{
+        definir_limites_mapa(&(*ultima_fila_jugable), &(*ultima_columna_jugable), ULTIMA_FILA_JUGABLE_TERCER_NIVEL, ULTIMA_COLUMNA_JUGABLE_TERCER_NIVEL);
+    }
 }
 
 //Pre: Debe recibir la accion realizada, el nivel, la variable jugador y el nivel actual
@@ -1019,41 +1042,16 @@ int comprueba_si_hay_pared(char accion_realizada, nivel_t nivel, jugador_t jugad
 	int ultima_columna_jugable;
 	int ultima_fila_jugable;
 
-	if (nivel_actual == PRIMER_NIVEL){
-		ultima_fila_jugable = ULTIMA_FILA_JUGABLE_PRIMER_NIVEL;
-		ultima_columna_jugable = ULTIMA_COLUMNA_JUGABLE_PRIMER_NIVEL;
-	} else if(nivel_actual == SEGUNDO_NIVEL){
-		ultima_fila_jugable = ULTIMA_FILA_JUGABLE_SEGUNDO_NIVEL;
-		ultima_columna_jugable = ULTIMA_COLUMNA_JUGABLE_SEGUNDO_NIVEL;
-	} else{
-		ultima_fila_jugable = ULTIMA_FILA_JUGABLE_TERCER_NIVEL;
-		ultima_columna_jugable = ULTIMA_COLUMNA_JUGABLE_TERCER_NIVEL;
-	}
+    definir_mapa(&ultima_fila_jugable, &ultima_columna_jugable, nivel_actual);
 
 	if (accion_realizada == ARRIBA){
-		for (int i = 0; i < nivel.tope_paredes; ++i){
-			if(jugador.posicion.fil != PRIMERA_FILA_JUGABLE && nivel.paredes[i].fil == (jugador.posicion.fil-UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){		
-				pared_a_destruir = i;
-			}	
-		}
+        definir_pared_superior_a_destruir(&pared_a_destruir, nivel, jugador, ultima_columna_jugable);
 	} else if(accion_realizada == ABAJO){
-		for (int i = 0; i < nivel.tope_paredes; ++i){
-			if(jugador.posicion.fil != ultima_fila_jugable && nivel.paredes[i].fil == (jugador.posicion.fil+UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){
-				pared_a_destruir = i;
-			}	
-		}
+        definir_pared_inferior_a_destruir(&pared_a_destruir, nivel, jugador, ultima_fila_jugable);
 	} else if(accion_realizada == DERECHA){
-		for (int i = 0; i < nivel.tope_paredes; ++i){
-			if(jugador.posicion.col != ultima_columna_jugable && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col+UNA_POSICION)){	
-				pared_a_destruir = i;
-			}	
-		}
+        definir_pared_derecha_a_destruir(&pared_a_destruir, nivel, jugador, ultima_columna_jugable);
 	} else{
-		for (int i = 0; i < nivel.tope_paredes; ++i){
-			if(jugador.posicion.col != PRIMERA_COLUMNA_JUGABLE && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col-UNA_POSICION)){
-				pared_a_destruir = i;
-			}	
-		}
+        definir_pared_izquierda_a_destruir(&pared_a_destruir, nivel, jugador);
 	}
 	return pared_a_destruir;
 }
@@ -1093,7 +1091,8 @@ void eliminar_pared(nivel_t* nivel, int posicion_pared_destruida){
 void eliminar_fuego(nivel_t* nivel, int posicion_fuego_apagar){ 
 	for (int i = posicion_fuego_apagar; i < ((*nivel).tope_obstaculos-1); ++i){
 		(*nivel).obstaculos[i] = (*nivel).obstaculos[i+1];
-	} (*nivel).tope_obstaculos--;
+	}
+    (*nivel).tope_obstaculos--;
 	printf("Has extinguido el fuego!\n");
 }
 
@@ -1142,52 +1141,60 @@ void ejecutar_uso_de_herramienta(char accion_realizada, juego_t* juego){
 	}
 }
 
+void ejecutar_rotacion_horaria_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, int desplazamiento){
+    for (int i = 0; i < tope_paredes; ++i){
+        int fila_auxiliar = paredes[i].fil;
+        paredes[i].fil = paredes[i].col;
+        paredes[i].col = abs(fila_auxiliar - desplazamiento);
+    }
+}
+
+void ejecutar_rotacion_antihoraria_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, int desplazamiento){
+    for (int i = 0; i < tope_paredes; ++i){
+        int columna_auxiliar = paredes[i].col;
+        paredes[i].col = paredes[i].fil;
+        paredes[i].fil = abs(columna_auxiliar - desplazamiento);
+    }
+}
+
 //Pre: Debe recibir el vector de paredes junto a su tope, la accion realizada y el nivel actual.
 //Post: Rotara las paredes del mapa hacia el lado ingresado por el usuario
 void rotar_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_paredes; ++i){
-				int fila_auxiliar = paredes[i].fil;
-				paredes[i].fil = paredes[i].col;
-				paredes[i].col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_horaria_paredes(paredes, tope_paredes, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_paredes; ++i){
-				int columna_auxiliar = paredes[i].col;
-				paredes[i].col = paredes[i].fil;
-				paredes[i].fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_paredes(paredes, tope_paredes, LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
 		}
 	} else if(nivel_actual == SEGUNDO_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_paredes; ++i){
-				int fila_auxiliar = paredes[i].fil;
-				paredes[i].fil = paredes[i].col;
-				paredes[i].col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
-			}
+            ejecutar_rotacion_horaria_paredes(paredes, tope_paredes, LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
 		} else{
-			for (int i = 0; i < tope_paredes; ++i){
-				int columna_auxiliar = paredes[i].col;
-				paredes[i].col = paredes[i].fil;
-				paredes[i].fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_paredes(paredes, tope_paredes, LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
 		}
 	} else{
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_paredes; ++i){
-				int fila_auxiliar = paredes[i].fil;
-				paredes[i].fil = paredes[i].col;
-				paredes[i].col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_TERCER_NIVEL);
-			}
+            ejecutar_rotacion_horaria_paredes(paredes, tope_paredes, LIMITE_POSICION_FILAS_TERCER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_paredes; ++i){
-				int columna_auxiliar = paredes[i].col;
-				paredes[i].col = paredes[i].fil;
-				paredes[i].fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_paredes(paredes, tope_paredes, LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
 		}
 	}
+}
+
+void ejecutar_rotacion_horaria_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, int desplazamiento){
+    for (int i = 0; i < tope_obstaculos; ++i){
+        int fila_auxiliar = obstaculos[i].posicion.fil;
+        obstaculos[i].posicion.fil = obstaculos[i].posicion.col;
+        obstaculos[i].posicion.col = abs(fila_auxiliar - desplazamiento);
+    }
+}
+
+void ejecutar_rotacion_antihoraria_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, int desplazamiento){
+    for (int i = 0; i < tope_obstaculos; ++i){
+        int columna_auxiliar = obstaculos[i].posicion.col;
+        obstaculos[i].posicion.col = obstaculos[i].posicion.fil;
+        obstaculos[i].posicion.fil = abs(columna_auxiliar - desplazamiento);
+    }
 }
 
 //Pre: Debe recibir el vector de obstaculos junto a su tope, la accion realizada y el nivel actual.
@@ -1195,47 +1202,39 @@ void rotar_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, char acc
 void rotar_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int fila_auxiliar = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_horaria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int columna_auxiliar = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
 		}
 	} else if(nivel_actual == SEGUNDO_NIVEL){
-		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int fila_auxiliar = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
-			}
+        if (accion_realizada == ROTAR_MAPA_HORARIO){
+            ejecutar_rotacion_horaria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
 		} else{
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int columna_auxiliar = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
 		}
 	} else{
-		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int fila_auxiliar = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_TERCER_NIVEL);
-			}
+        if (accion_realizada == ROTAR_MAPA_HORARIO){
+            ejecutar_rotacion_horaria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_FILAS_TERCER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_obstaculos; ++i){
-				int columna_auxiliar = obstaculos[i].posicion.col;
-				obstaculos[i].posicion.col = obstaculos[i].posicion.fil;
-				obstaculos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_obstaculos(obstaculos, tope_obstaculos, LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
 		}
 	}
+}
+
+void ejecutar_rotacion_horaria_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herramientas, int desplazamiento){
+    for (int i = 0; i < tope_herramientas; ++i){
+        int fila_auxiliar = herramientas[i].posicion.fil;
+        herramientas[i].posicion.fil = herramientas[i].posicion.col;
+        herramientas[i].posicion.col = abs(fila_auxiliar - desplazamiento);
+    }
+}
+
+void ejecutar_rotacion_antihoraria_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herramientas, int desplazamiento){
+    for (int i = 0; i < tope_herramientas; ++i){
+        int columna_auxiliar = herramientas[i].posicion.col;
+        herramientas[i].posicion.col = herramientas[i].posicion.fil;
+        herramientas[i].posicion.fil = abs(columna_auxiliar - desplazamiento);
+    }
 }
 
 //Pre: Debe recibir el vector de herramientas junto a su tope, la accion realizada y el nivel actual.
@@ -1243,47 +1242,43 @@ void rotar_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, 
 void rotar_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herramientas, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_herramientas; ++i){
-				int fila_auxiliar = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_horaria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_herramientas; ++i){
-				int columna_auxiliar = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
 		}
 	} else if(nivel_actual == SEGUNDO_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_herramientas; ++i){
-				int fila_auxiliar = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
-			}
+            ejecutar_rotacion_horaria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
 		} else{
-			for (int i = 0; i < tope_herramientas; ++i){
-				int columna_auxiliar = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
 		}
 	} else{
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_herramientas; ++i){
-				int fila_auxiliar = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_TERCER_NIVEL);
-			}
+            ejecutar_rotacion_horaria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_FILAS_TERCER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_herramientas; ++i){
-				int columna_auxiliar = herramientas[i].posicion.col;
-				herramientas[i].posicion.col = herramientas[i].posicion.fil;
-				herramientas[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
-			}
+            ejecutar_rotacion_antihoraria_herramientas(herramientas, tope_herramientas, LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
 		}
 	}
+}
+
+void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
+    for (int i = 0; i < tope_papeleos; ++i){
+        if (!papeleos[i].recolectado){
+            int fila_auxiliar = papeleos[i].posicion.fil;
+            papeleos[i].posicion.fil = papeleos[i].posicion.col;
+            papeleos[i].posicion.col = abs(fila_auxiliar - desplazamiento);
+        }
+    }
+}
+
+void ejecutar_rotacion_papeleos_antihorario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
+    for (int i = 0; i < tope_papeleos; ++i){
+        if(!papeleos[i].recolectado){
+            int columna_auxiliar = papeleos[i].posicion.col;
+            papeleos[i].posicion.col = papeleos[i].posicion.fil;
+            papeleos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
+        }
+    }
 }
 
 //Pre: Debe recibir el vector de papeleos junto a su tope, la accion realizada y el nivel actual.
@@ -1291,93 +1286,57 @@ void rotar_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herram
 void rotar_papeleos(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_papeleos; ++i){
-				if (!papeleos[i].recolectado){
-					int fila_auxiliar = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_PRIMER_NIVEL);
-				}
-			}
+            ejecutar_rotacion_papeleos_horario(papeleos, tope_papeleos, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_papeleos; ++i){
-				if(!papeleos[i].recolectado){
-					int columna_auxiliar = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
-				}
-			}
+            ejecutar_rotacion_papeleos_antihorario(papeleos, tope_papeleos, LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
 		}
 	} else if(nivel_actual == SEGUNDO_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_papeleos; ++i){
-				if(!papeleos[i].recolectado){
-					int fila_auxiliar = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
-				}
-			}
+            ejecutar_rotacion_papeleos_horario(papeleos, tope_papeleos, LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
 		} else{
-			for (int i = 0; i < tope_papeleos; ++i){
-				if(!papeleos[i].recolectado){
-					int columna_auxiliar = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
-				}
-			}
+            ejecutar_rotacion_papeleos_antihorario(papeleos, tope_papeleos, LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
 		}
 	} else{
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			for (int i = 0; i < tope_papeleos; ++i){
-				if (!papeleos[i].recolectado){
-					int fila_auxiliar = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_TERCER_NIVEL);
-				}
-			}
+            ejecutar_rotacion_papeleos_horario(papeleos, tope_papeleos, LIMITE_POSICION_FILAS_TERCER_NIVEL);
 		} else{
-			for (int i = 0; i < tope_papeleos; ++i){
-				if(!papeleos[i].recolectado){
-					int columna_auxiliar = papeleos[i].posicion.col;
-					papeleos[i].posicion.col = papeleos[i].posicion.fil;
-					papeleos[i].posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
-				}
-			}	
+            ejecutar_rotacion_papeleos_antihorario(papeleos, tope_papeleos, LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
 		}
 	}
 }
 
+void ejecutar_rotacion_correspondiente(jugador_t* jugador, char accion_realizada, int limite){
+    if (accion_realizada == ROTAR_MAPA_HORARIO){
+        int fila_auxiliar = (*jugador).posicion.fil;
+        (*jugador).posicion.fil = (*jugador).posicion.col;
+        (*jugador).posicion.col = abs(fila_auxiliar - limite);
+    } else{
+        int columna_auxiliar = (*jugador).posicion.col;
+        (*jugador).posicion.col = (*jugador).posicion.fil;
+        (*jugador).posicion.fil = abs(columna_auxiliar - limite);
+    }
+}
+
 //Pre: Debe recibir la variable jugador, la accion realizada y el nivel actual.
-//Post: Rotara el jugador hacia el lado ingresado por el usuario
+//Post: Rotará el jugador hacia el lado ingresado por el usuario
 void rotar_jugador(jugador_t* jugador, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			int fila_auxiliar = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = (*jugador).posicion.col;
-			(*jugador).posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_PRIMER_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
 		} else{
-			int columna_auxiliar = (*jugador).posicion.col;
-			(*jugador).posicion.col = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_COLUMNAS_PRIMER_NIVEL);
 		}
 	} else if(nivel_actual == SEGUNDO_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			int fila_auxiliar = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = (*jugador).posicion.col;
-			(*jugador).posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_FILAS_SEGUNDO_NIVEL);
 		} else{
-			int columna_auxiliar = (*jugador).posicion.col;
-			(*jugador).posicion.col = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_COLUMNAS_SEGUNDO_NIVEL);
 		}
 	} else{
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
-			int fila_auxiliar = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = (*jugador).posicion.col;
-			(*jugador).posicion.col = abs(fila_auxiliar - LIMITE_POSICION_FILAS_TERCER_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_FILAS_TERCER_NIVEL);
 		} else{
-			int columna_auxiliar = (*jugador).posicion.col;
-			(*jugador).posicion.col = (*jugador).posicion.fil;
-			(*jugador).posicion.fil = abs(columna_auxiliar - LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
+            ejecutar_rotacion_correspondiente(jugador, accion_realizada, LIMITE_POSICION_COLUMNAS_TERCER_NIVEL);
 		}
 	}
 }
@@ -1433,7 +1392,6 @@ bool jugador_sin_movimientos(int movimientos){
 }
 
 int estado_juego(juego_t juego){
-
 	int estado;
 
 	if(juego.nivel_actual != TERCER_NIVEL && !jugador_sin_movimientos(juego.jugador.movimientos)){

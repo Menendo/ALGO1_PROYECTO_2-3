@@ -54,7 +54,7 @@ bool coordenada_no_coincide_paredes(coordenada_t coordenada_aleatoria, coordenad
     return no_coincide;
 }
 
-//Pre:Debe ser dada una una coordenada aleatoria y la posicion inicial del jugador en el nivel para hacer la comparacion
+//Pre:Debe ser dada  una coordenada aleatoria y la posicion inicial del jugador en el nivel para hacer la comparacion
 //Pos:Devuelve True si la coordenada aleatoria generada no coincide con la posicion inicial del jugador en el nivel y false en el caso de que si lo haga
 bool coordenada_coincide_pos_inicial(coordenada_t coordenada_aleatoria, coordenada_t pos_inicial_jugador){
     return (coordenada_aleatoria.fil == pos_inicial_jugador.fil && coordenada_aleatoria.col == pos_inicial_jugador.col);
@@ -134,107 +134,56 @@ void inicializar_coordenada_random(coordenada_t coordenadas_aleatorias[MAX_COORD
     (**ref_tope_coord_aleatorias) = 1;
 }
 
+void generar_coordenadas_aleatorias(coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t paredes[MAX_PAREDES],int* ref_tope_coord_aleatorias, coordenada_t
+pos_inicial_jugador, int tope_paredes, int coordenadas_aleatorias_necesitadas, int amplitud_de_rango, int valor_minimo){
+    for (int i = 0; i < coordenadas_aleatorias_necesitadas; ++i){
+        coordenada_t coordenada_aleatoria;
+        coordenada_aleatoria.fil = rand () % amplitud_de_rango + valor_minimo;
+        coordenada_aleatoria.col = rand () % amplitud_de_rango + valor_minimo;
+
+        while(!coordenada_no_coincide_paredes(coordenada_aleatoria, paredes, tope_paredes) || !coordenada_no_coincide_coordenadas(coordenada_aleatoria, coordenadas_aleatorias, ref_tope_coord_aleatorias) || coordenada_coincide_pos_inicial(coordenada_aleatoria, pos_inicial_jugador)){
+            coordenada_aleatoria.fil = rand () % amplitud_de_rango + valor_minimo;
+            coordenada_aleatoria.col = rand () % amplitud_de_rango + valor_minimo;
+        }
+        coordenadas_aleatorias[*ref_tope_coord_aleatorias] = coordenada_aleatoria;
+        (*ref_tope_coord_aleatorias)++;
+    }
+}
+
 void obtener_coordenadas_aleatorias(coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t paredes[MAX_PAREDES],int* ref_tope_coord_aleatorias, coordenada_t pos_inicial_jugador, int tope_paredes, int numero_nivel){
-	
+    inicializar_coordenada_random(coordenadas_aleatorias, &ref_tope_coord_aleatorias);
 	if(numero_nivel == PRIMER_NIVEL){
-
-		inicializar_coordenada_random(coordenadas_aleatorias, &ref_tope_coord_aleatorias);
-
-		for (int i = 0; i < COORDENADAS_ALEATORIAS_NECESITADAS_PRIMER_NIVEL; ++i){
-			coordenada_t coordenada_aleatoria;
-			coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-			coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-
-			while(!coordenada_no_coincide_paredes(coordenada_aleatoria, paredes, tope_paredes) || !coordenada_no_coincide_coordenadas(coordenada_aleatoria, coordenadas_aleatorias, ref_tope_coord_aleatorias) || coordenada_coincide_pos_inicial(coordenada_aleatoria, pos_inicial_jugador)){
-				coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-				coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-			}
-		 	coordenadas_aleatorias[*ref_tope_coord_aleatorias] = coordenada_aleatoria;
-			(*ref_tope_coord_aleatorias)++;
-		}
-
+        generar_coordenadas_aleatorias(coordenadas_aleatorias, paredes, ref_tope_coord_aleatorias, pos_inicial_jugador, tope_paredes, COORDENADAS_ALEATORIAS_NECESITADAS_PRIMER_NIVEL,AMPLITUD_DE_RANGO_PRIMER_NIVEL, VALOR_MINIMO_PRIMER_NIVEL);
 	} else if(numero_nivel == SEGUNDO_NIVEL){
-
-		inicializar_coordenada_random(coordenadas_aleatorias, &ref_tope_coord_aleatorias);
-
-		for (int i = 0; i < COORDENADAS_ALEATORIAS_NECESITADAS_SEGUNDO_NIVEL; ++i){
-			coordenada_t coordenada_aleatoria;
-			coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-			coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-
-			while(!coordenada_no_coincide_paredes(coordenada_aleatoria, paredes, tope_paredes) || !coordenada_no_coincide_coordenadas(coordenada_aleatoria, coordenadas_aleatorias, ref_tope_coord_aleatorias) || coordenada_coincide_pos_inicial(coordenada_aleatoria, pos_inicial_jugador)){
-				coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-				coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-			}
-			 coordenadas_aleatorias[*ref_tope_coord_aleatorias] = coordenada_aleatoria;
-			(*ref_tope_coord_aleatorias)++;
-		}
-
+        generar_coordenadas_aleatorias(coordenadas_aleatorias, paredes, ref_tope_coord_aleatorias, pos_inicial_jugador, tope_paredes, COORDENADAS_ALEATORIAS_NECESITADAS_SEGUNDO_NIVEL,AMPLITUD_DE_RANGO_SEGUNDO_NIVEL, VALOR_MINIMO_SEGUNDO_NIVEL);
 	} else {
-
-		inicializar_coordenada_random(coordenadas_aleatorias, &ref_tope_coord_aleatorias);
-
-		for (int i = 0; i < COORDENADAS_ALEATORIAS_NECESITADAS_TERCER_NIVEL; ++i){
-			coordenada_t coordenada_aleatoria;
-			coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-			coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-
-			while(!coordenada_no_coincide_paredes(coordenada_aleatoria, paredes, tope_paredes) || !coordenada_no_coincide_coordenadas(coordenada_aleatoria, coordenadas_aleatorias, ref_tope_coord_aleatorias) || coordenada_coincide_pos_inicial(coordenada_aleatoria, pos_inicial_jugador)){
-				coordenada_aleatoria.fil = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-				coordenada_aleatoria.col = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-			} 
-			 coordenadas_aleatorias[*ref_tope_coord_aleatorias] = coordenada_aleatoria;
-			(*ref_tope_coord_aleatorias)++;
-		}
+        generar_coordenadas_aleatorias(coordenadas_aleatorias, paredes, ref_tope_coord_aleatorias, pos_inicial_jugador, tope_paredes, COORDENADAS_ALEATORIAS_NECESITADAS_TERCER_NIVEL,AMPLITUD_DE_RANGO_TERCER_NIVEL, VALOR_MINIMO_TERCER_NIVEL);
 	}
 }
 
+void generar_coordenadas_fuegos(coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t paredes[MAX_PAREDES], coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS],int
+tope_coord_aleatorias, int* ref_tope_coord_fuegos,coordenada_t pos_inicial_jugador, int tope_paredes, int amplitud_de_rango, int valor_minimo, int coordendas_fuegos_necesitadas){
+    for (int i = 0; i < coordendas_fuegos_necesitadas; ++i){
+        coordenada_t coordenada_fuego;
+        coordenada_fuego.fil = rand () % amplitud_de_rango + valor_minimo;
+        coordenada_fuego.col = rand () % amplitud_de_rango + valor_minimo;
+
+        while(!fuego_no_coincide_paredes(coordenada_fuego, paredes, tope_paredes) || !fuego_no_coincide_coordenadas(coordenada_fuego, coordenadas_aleatorias, tope_coord_aleatorias) || fuego_coincide_pos_inicial(coordenada_fuego, pos_inicial_jugador)  || !fuego_no_coincide_fuegos(coordenada_fuego, coordenadas_fuegos, ref_tope_coord_fuegos) || !fuego_adyacente_pared(coordenada_fuego, paredes, tope_paredes)){
+            coordenada_fuego.fil = rand () % amplitud_de_rango + valor_minimo;
+            coordenada_fuego.col = rand () % amplitud_de_rango + valor_minimo;
+        }
+        coordenadas_fuegos[*ref_tope_coord_fuegos] = coordenada_fuego;
+        (*ref_tope_coord_fuegos)++;
+    }
+}
+
 void obtener_coordenadas_fuegos(coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t paredes[MAX_PAREDES], coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS],int  tope_coord_aleatorias, int* ref_tope_coord_fuegos,coordenada_t pos_inicial_jugador, int tope_paredes, int numero_nivel){
-
 	if(numero_nivel == PRIMER_NIVEL){
-
-		for (int i = 0; i < COORDENADAS_FUEGOS_NECESITADAS_PRIMER_NIVEL; ++i){
-			coordenada_t coordenada_fuego;
-			coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-			coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-
-			while(!fuego_no_coincide_paredes(coordenada_fuego, paredes, tope_paredes) || !fuego_no_coincide_coordenadas(coordenada_fuego, coordenadas_aleatorias, tope_coord_aleatorias) || fuego_coincide_pos_inicial(coordenada_fuego, pos_inicial_jugador)  || !fuego_no_coincide_fuegos(coordenada_fuego, coordenadas_fuegos, ref_tope_coord_fuegos) || !fuego_adyacente_pared(coordenada_fuego, paredes, tope_paredes)){
-				coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-				coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
-			}
-			 coordenadas_fuegos[*ref_tope_coord_fuegos] = coordenada_fuego;
-			(*ref_tope_coord_fuegos)++;
-		}
-
+        generar_coordenadas_fuegos(coordenadas_aleatorias, paredes, coordenadas_fuegos, tope_coord_aleatorias, ref_tope_coord_fuegos, pos_inicial_jugador, tope_paredes, AMPLITUD_DE_RANGO_PRIMER_NIVEL, VALOR_MINIMO_PRIMER_NIVEL, COORDENADAS_FUEGOS_NECESITADAS_PRIMER_NIVEL);
 	} else if(numero_nivel == SEGUNDO_NIVEL){
-
-		for (int i = 0; i < COORDENADAS_FUEGOS_NECESITADAS_SEGUNDO_NIVEL; ++i){
-			coordenada_t coordenada_fuego;
-			coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-			coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-
-			while(!fuego_no_coincide_paredes(coordenada_fuego, paredes, tope_paredes) || !fuego_no_coincide_coordenadas(coordenada_fuego, coordenadas_aleatorias, tope_coord_aleatorias) || fuego_coincide_pos_inicial(coordenada_fuego, pos_inicial_jugador)  || !fuego_no_coincide_fuegos(coordenada_fuego, coordenadas_fuegos, ref_tope_coord_fuegos) || !fuego_adyacente_pared(coordenada_fuego, paredes, tope_paredes)){
-				coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-				coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
-			}
-			 coordenadas_fuegos[*ref_tope_coord_fuegos] = coordenada_fuego;
-			(*ref_tope_coord_fuegos)++;
-		}
-
+        generar_coordenadas_fuegos(coordenadas_aleatorias, paredes, coordenadas_fuegos, tope_coord_aleatorias, ref_tope_coord_fuegos, pos_inicial_jugador, tope_paredes, AMPLITUD_DE_RANGO_SEGUNDO_NIVEL, VALOR_MINIMO_SEGUNDO_NIVEL, COORDENADAS_FUEGOS_NECESITADAS_SEGUNDO_NIVEL);
 	} else {
-
-		for (int i = 0; i < COORDENADAS_FUEGOS_NECESITADAS_TERCER_NIVEL; ++i){
-			coordenada_t coordenada_fuego;
-			coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-			coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-
-			while(!fuego_no_coincide_paredes(coordenada_fuego, paredes, tope_paredes) || !fuego_no_coincide_coordenadas(coordenada_fuego, coordenadas_aleatorias, tope_coord_aleatorias) || fuego_coincide_pos_inicial(coordenada_fuego, pos_inicial_jugador)  || !fuego_no_coincide_fuegos(coordenada_fuego, coordenadas_fuegos, ref_tope_coord_fuegos) || !fuego_adyacente_pared(coordenada_fuego, paredes, tope_paredes)){
-				coordenada_fuego.fil = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-				coordenada_fuego.col = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
-			} 
-			coordenadas_fuegos[*ref_tope_coord_fuegos] = coordenada_fuego;
-			(*ref_tope_coord_fuegos)++;
-		}
+        generar_coordenadas_fuegos(coordenadas_aleatorias, paredes, coordenadas_fuegos, tope_coord_aleatorias, ref_tope_coord_fuegos, pos_inicial_jugador, tope_paredes, AMPLITUD_DE_RANGO_TERCER_NIVEL, VALOR_MINIMO_TERCER_NIVEL, COORDENADAS_FUEGOS_NECESITADAS_TERCER_NIVEL);
 	}
 }
 
@@ -284,11 +233,8 @@ bool coordenada_coincide_jugador(coordenada_t coordenada_random, coordenada_t po
 }
 
 coordenada_t genera_coordenada_random(juego_t* juego){
-
 	coordenada_t coordenada_random;
-
 	if ((*juego).nivel_actual == PRIMER_NIVEL){
-
 		coordenada_random.fil = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
 		coordenada_random.col = rand () % AMPLITUD_DE_RANGO_PRIMER_NIVEL + VALOR_MINIMO_PRIMER_NIVEL;
 
@@ -298,9 +244,7 @@ coordenada_t genera_coordenada_random(juego_t* juego){
 		}
 
 		return coordenada_random;
-
 	} else if ((*juego).nivel_actual == SEGUNDO_NIVEL){
-		
 		coordenada_random.fil = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
 		coordenada_random.col = rand () % AMPLITUD_DE_RANGO_SEGUNDO_NIVEL + VALOR_MINIMO_SEGUNDO_NIVEL;
 
@@ -310,9 +254,7 @@ coordenada_t genera_coordenada_random(juego_t* juego){
 		}
 
 		return coordenada_random;
-
 	} else{
-
 		coordenada_random.fil = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
 		coordenada_random.col = rand () % AMPLITUD_DE_RANGO_TERCER_NIVEL + VALOR_MINIMO_TERCER_NIVEL;
 
