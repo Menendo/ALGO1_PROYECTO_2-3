@@ -122,6 +122,7 @@ const int CANTIDAD_PAPELEOS_STITCH_TERCER_NIVEL = 3;
 const char PARED = '#';
 const char ESPACIO_VACIO_MATRIZ = ' ';
 
+//Post Realiza el llenado del vector obstaculos con los fuegos correspondientes al nivel.
 void realizar_llenado_fuegos(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS], int cantidad_de_fuegos){
     for (int i = 0; i < cantidad_de_fuegos; ++i){
         obstaculos[i].posicion = coordenadas_fuegos[i];
@@ -140,6 +141,7 @@ void llenar_obstaculos_con_fuegos_olaf(objeto_t obstaculos[MAX_OBSTACULOS], int*
 	}
 }
 
+//Post Realiza el llenado del vector obstaculos con las medias correspondientes al nivel.
 void realizar_llenado_medias(objeto_t obstaculos[MAX_OBSTACULOS], int* ref_tope_obstaculos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int
 contador_numeros_aleatorios, int cantidad_de_medias){
     for (int i = *ref_tope_obstaculos; i < cantidad_de_medias; ++i){
@@ -206,6 +208,7 @@ void llenar_herramientas_con_botellas(objeto_t herramientas[MAX_HERRAMIENTAS], i
 	}
 }
 
+//Post Realiza el llenado del vector herramientas con los ahuyenta randall  correspondientes al nivel.
 void realizar_llenado_heramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int* ref_tope_herramientas, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int
 contador_numeros_aleatorios, int cantidad_de_herramientas){
     for (int i = *ref_tope_herramientas; i < cantidad_de_herramientas; ++i){
@@ -226,6 +229,7 @@ void llenar_herramientas_con_interruptores(objeto_t herramientas[MAX_HERRAMIENTA
 	}
 }
 
+//Post Realiza el llenado del vector papeleos con los papeleos correspondientes al nivel.
 void realizar_llenado_papeleos(papeleo_t papeleos[MAX_PAPELEOS], int* ref_tope_papeleos, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], int contador_numeros_aleatorios, int
 cantidad_de_papeleos){
     int id_papeleos = ID_PRIMER_PAPELEO;
@@ -268,8 +272,8 @@ void llenar_papeleos_stitch(papeleo_t papeleos[MAX_PAPELEOS], int* ref_tope_pape
 	}
 }
 
+//Post Pone en marcha las debidas funciones para inicializar todos los elementos de los niveles 1 y 2
 void inicializar_elementos_nivel_uno_dos(nivel_t* nivel, int numero_nivel, char personaje_tp1, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS], coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS]){
-
     if (personaje_tp1 == OLAF){
         llenar_obstaculos_con_medias_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
         llenar_obstaculos_con_fuegos_olaf(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_fuegos, numero_nivel);
@@ -283,6 +287,7 @@ void inicializar_elementos_nivel_uno_dos(nivel_t* nivel, int numero_nivel, char 
     llenar_papeleos(nivel->papeleos, &(nivel->tope_papeleos), coordenadas_aleatorias, numero_nivel);
 }
 
+//Post Pone en marcha las debidas funciones para inicializar todos los elementos del nivel 3
 void inicializar_elementos_nivel_tres(nivel_t* nivel, int numero_nivel, char personaje_tp1, coordenada_t coordenadas_aleatorias[MAX_COORD_ALEATORIAS],
  coordenada_t coordenadas_fuegos[MAX_COORD_ALEATORIAS]){
     llenar_obstaculos_con_medias(nivel->obstaculos, &(nivel->tope_obstaculos), coordenadas_aleatorias, numero_nivel);
@@ -297,6 +302,7 @@ void inicializar_elementos_nivel_tres(nivel_t* nivel, int numero_nivel, char per
 
 }
 
+//Post Pone en marcha las debidas funciones para inicializar las bases de todos los niveles y luego llamar a la inicializacion de sus elementos
 void inicializar_nivel(nivel_t* nivel, int numero_nivel, char personaje_tp1){
     nivel->tope_paredes = 0;
     nivel->tope_obstaculos = 0;
@@ -366,7 +372,7 @@ void inicializar_juego(juego_t* juego, char personaje_tp1){
 	(juego)->jugador.movimientos_realizados = SIN_MOVIMIENTOS;
 }
 
-
+//Post Carga la matriz primer nivel con los espacios
 void cargar_matriz_espacios_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
     for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
@@ -374,7 +380,7 @@ void cargar_matriz_espacios_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER
         }
     }
 }
-
+//Post Carga la matriz segundo nivel con los espacios
 void cargar_matriz_espacios_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
     for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
@@ -382,7 +388,7 @@ void cargar_matriz_espacios_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGU
         }
     }
 }
-
+//Post Carga la matriz tercer nivel con los espacios
 void cargar_matriz_espacios_tercer_nivel(char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
     for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
@@ -392,7 +398,7 @@ void cargar_matriz_espacios_tercer_nivel(char mapa_tercer_nivel[MAX_FILAS_TERCER
 }
 
 //Pre:el nivel actual debe tener un valor de entre 1 y 3 inclusives
-//Pos:carga los elementos sin ocupar de la matriz para evitar que haya basura en ella y la devuelve
+//Pos:carga los elementos sin ocupar de la matriz y la devuelve
 void cargar_matriz_espacios(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
         cargar_matriz_espacios_primer_nivel(mapa_primer_nivel);
@@ -403,19 +409,22 @@ void cargar_matriz_espacios(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_C
 	}
 }
 
-
+//Post Carga la matriz primer nivel con las paredes
 void cargar_paredes_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_paredes; ++i){
         mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].paredes[i].fil][niveles[POSICION_PRIMER_NIVEL].paredes[i].col] = PARED;
     }
 }
 
+
+//Post Carga la matriz segundo nivel con las paredes
 void cargar_paredes_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
     for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_paredes; ++i){
         mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].paredes[i].fil][niveles[POSICION_SEGUNDO_NIVEL].paredes[i].col] = PARED;
     }
 }
 
+//Post Carga la matriz tercer nivel con las paredes
 void cargar_paredes_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_paredes; ++i){
         mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].paredes[i].fil][niveles[POSICION_TERCER_NIVEL].paredes[i].col] = PARED;
@@ -434,19 +443,21 @@ void cargar_matriz_con_paredes(nivel_t niveles[MAX_NIVELES], char mapa_primer_ni
 	}
 }
 
-
+//Post Carga la matriz primer nivel con los obstaculos
 void cargar_obstaculos_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_obstaculos; ++i){
         mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].obstaculos[i].tipo;
     }
 }
 
+//Post Carga la matriz segundo nivel con los obstaculos
 void cargar_obstaculos_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
     for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_obstaculos; ++i){
         mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].obstaculos[i].tipo;
     }
 }
 
+//Post Carga la matriz tercer nivel con los obstaculos
 void cargar_obstaculos_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_obstaculos; ++i){
         mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].obstaculos[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].obstaculos[i].tipo;
@@ -465,19 +476,21 @@ void cargar_matriz_con_obstaculos(nivel_t niveles[MAX_NIVELES], char mapa_primer
 	}
 }
 
-
+//Post Carga la matriz primer nivel con las herramientas
 void cargar_herramientas_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_herramientas; ++i){
         mapa_primer_nivel[niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_PRIMER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_PRIMER_NIVEL].herramientas[i].tipo;
     }
 }
 
+//Post Carga la matriz segundo nivel con las herramientas
 void cargar_herramientas_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
     for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_herramientas; ++i){
         mapa_segundo_nivel[niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_SEGUNDO_NIVEL].herramientas[i].tipo;
     }
 }
 
+//Post Carga la matriz tercer nivel con las herramientas
 void cargar_herramientas_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
     for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_herramientas; ++i){
         mapa_tercer_nivel[niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.fil][niveles[POSICION_TERCER_NIVEL].herramientas[i].posicion.col] = niveles[POSICION_TERCER_NIVEL].herramientas[i].tipo;
@@ -508,6 +521,7 @@ void cargar_matriz_con_pos(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[
 	}
 }
 
+//Post Carga la matriz primer nivel con los papeleos
 void cargar_matriz_con_papeleos_primer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL], int* id_papeleos){
     for (int i = 0; i < niveles[POSICION_PRIMER_NIVEL].tope_papeleos; ++i){
         if (!niveles[POSICION_PRIMER_NIVEL].papeleos[i].recolectado){
@@ -517,6 +531,7 @@ void cargar_matriz_con_papeleos_primer_nivel(nivel_t niveles[MAX_NIVELES], char 
     }
 }
 
+//Post Carga la matriz segundo nivel con los papeleos
 void cargar_matriz_con_papeleos_segundo_nivel(nivel_t niveles[MAX_NIVELES], char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL], int* id_papeleos){
     for (int i = 0; i < niveles[POSICION_SEGUNDO_NIVEL].tope_papeleos; ++i){
         if (!niveles[POSICION_SEGUNDO_NIVEL].papeleos[i].recolectado){
@@ -526,6 +541,7 @@ void cargar_matriz_con_papeleos_segundo_nivel(nivel_t niveles[MAX_NIVELES], char
     }
 }
 
+//Post Carga la matriz tercer nivel con los papeleos
 void cargar_matriz_con_papeleos_tercer_nivel(nivel_t niveles[MAX_NIVELES], char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL], int* id_papeleos){
     for (int i = 0; i < niveles[POSICION_TERCER_NIVEL].tope_papeleos; ++i){
         if (!niveles[POSICION_TERCER_NIVEL].papeleos[i].recolectado){
@@ -549,6 +565,7 @@ void cargar_matriz_con_papeleos(nivel_t niveles[MAX_NIVELES], char mapa_primer_n
 	}
 }
 
+//Post Imprime en pantalla la matriz primer nivel
 void imprimir_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_COLUMNAS_PRIMER_NIVEL]){
     for (int i = 0; i < MAX_FILAS_PRIMER_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_PRIMER_NIVEL; ++j){
@@ -558,6 +575,7 @@ void imprimir_primer_nivel(char mapa_primer_nivel[MAX_FILAS_PRIMER_NIVEL][MAX_CO
     }
 }
 
+//Post Imprime en pantalla la matriz segundo nivel
 void imprimir_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX_COLUMNAS_SEGUNDO_NIVEL]){
     for (int i = 0; i < MAX_FILAS_SEGUNDO_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_SEGUNDO_NIVEL; ++j){
@@ -567,6 +585,7 @@ void imprimir_segundo_nivel(char mapa_segundo_nivel[MAX_FILAS_SEGUNDO_NIVEL][MAX
     }
 }
 
+//Post Imprime en pantalla la matriz tercer nivel
 void imprimir_tercer_nivel(char mapa_tercer_nivel[MAX_FILAS_TERCER_NIVEL][MAX_COLUMNAS_TERCER_NIVEL]){
     for (int i = 0; i < MAX_FILAS_TERCER_NIVEL; ++i){
         for (int j = 0; j < MAX_COLUMNAS_TERCER_NIVEL; ++j){
@@ -937,7 +956,7 @@ void ejecutar_movimiento(char accion_realizada, juego_t* juego){
 	}		
 }
 
-
+//Post Define cual es el fuego superior que se debe apagar
 void definir_fuego_superior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
     for (int i = 0; i < nivel.tope_obstaculos; ++i){
         if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil-UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
@@ -946,6 +965,7 @@ void definir_fuego_superior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador
     }
 }
 
+//Post Define cual es el fuego inferior que se debe apagar
 void definir_fuego_inferior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
     for (int i = 0; i < nivel.tope_obstaculos; ++i){
         if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == (jugador.posicion.fil+UNA_POSICION) && nivel.obstaculos[i].posicion.col == jugador.posicion.col){
@@ -954,6 +974,7 @@ void definir_fuego_inferior_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador
     }
 }
 
+//Post Define cual es el fuego derecho que se debe apagar
 void definir_fuego_derecho_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
     for (int i = 0; i < nivel.tope_obstaculos; ++i){
         if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col+UNA_POSICION)){		//CONVERTIR EN CONSTANTE
@@ -962,6 +983,7 @@ void definir_fuego_derecho_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_
     }
 }
 
+//Post Define cual es el fuego izquierdo que se debe apagar
 void definir_fuego_izquierdo_a_apagar(int* fuego_a_apagar, nivel_t nivel, jugador_t jugador){
     for (int i = 0; i < nivel.tope_obstaculos; ++i){
         if(nivel.obstaculos[i].tipo == FUEGOS && nivel.obstaculos[i].posicion.fil == jugador.posicion.fil && nivel.obstaculos[i].posicion.col == (jugador.posicion.col-UNA_POSICION)){
@@ -988,11 +1010,13 @@ int comprueba_si_hay_fuego(char accion_realizada, nivel_t nivel, jugador_t jugad
 	return fuego_a_apagar;
 }
 
+//Post Define los limites del mapa actual
 void definir_limites_mapa(int* ultima_fila_jugable, int* ultima_columna_jugable,int valor_ultima_fila_jugable,int valor_ultima_columna_jugable){
     (*ultima_fila_jugable) = valor_ultima_fila_jugable;
     (*ultima_columna_jugable) = valor_ultima_columna_jugable;
 }
 
+//Post Define cual es la pared superior que se debe destruir
 void definir_pared_superior_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_columna_jugable){
     for (int i = 0; i < nivel.tope_paredes; ++i){
         if(jugador.posicion.fil != PRIMERA_FILA_JUGABLE && nivel.paredes[i].fil == (jugador.posicion.fil-UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){
@@ -1001,6 +1025,7 @@ void definir_pared_superior_a_destruir(int* pared_a_destruir, nivel_t nivel, jug
     }
 }
 
+//Post Define cual es la pared inferior que se debe destruir
 void definir_pared_inferior_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_fila_jugable){
     for (int i = 0; i < nivel.tope_paredes; ++i){
         if(jugador.posicion.fil != ultima_fila_jugable && nivel.paredes[i].fil == (jugador.posicion.fil+UNA_POSICION) && nivel.paredes[i].col == jugador.posicion.col){
@@ -1009,6 +1034,7 @@ void definir_pared_inferior_a_destruir(int* pared_a_destruir, nivel_t nivel, jug
     }
 }
 
+//Post Define cual es la pared derecha que se debe destruir
 void definir_pared_derecha_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador, int ultima_columna_jugable){
     for (int i = 0; i < nivel.tope_paredes; ++i){
         if(jugador.posicion.col != ultima_columna_jugable && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col+UNA_POSICION)){
@@ -1017,6 +1043,7 @@ void definir_pared_derecha_a_destruir(int* pared_a_destruir, nivel_t nivel, juga
     }
 }
 
+//Post Define cual es la pared izquierda que se debe destruir
 void definir_pared_izquierda_a_destruir(int* pared_a_destruir, nivel_t nivel, jugador_t jugador){
     for (int i = 0; i < nivel.tope_paredes; ++i){
         if(jugador.posicion.col != PRIMERA_COLUMNA_JUGABLE && nivel.paredes[i].fil == jugador.posicion.fil && nivel.paredes[i].col == (jugador.posicion.col-UNA_POSICION)){
@@ -1025,6 +1052,7 @@ void definir_pared_izquierda_a_destruir(int* pared_a_destruir, nivel_t nivel, ju
     }
 }
 
+//Post Define cual es el mapa que se esta jugando para luego definir sus limites
 void definir_mapa(int* ultima_fila_jugable, int* ultima_columna_jugable, int nivel_actual){
     if (nivel_actual == PRIMER_NIVEL){
         definir_limites_mapa(&(*ultima_fila_jugable), &(*ultima_columna_jugable), ULTIMA_FILA_JUGABLE_PRIMER_NIVEL, ULTIMA_COLUMNA_JUGABLE_PRIMER_NIVEL);
@@ -1141,6 +1169,7 @@ void ejecutar_uso_de_herramienta(char accion_realizada, juego_t* juego){
 	}
 }
 
+//Post Ejecuta la rotacion del mapa en sentido horario de las paredes
 void ejecutar_rotacion_horaria_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, int desplazamiento){
     for (int i = 0; i < tope_paredes; ++i){
         int fila_auxiliar = paredes[i].fil;
@@ -1149,6 +1178,7 @@ void ejecutar_rotacion_horaria_paredes(coordenada_t paredes[MAX_PAREDES], int to
     }
 }
 
+//Post Ejecuta la rotacion del mapa en sentido antihorario de las paredes
 void ejecutar_rotacion_antihoraria_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, int desplazamiento){
     for (int i = 0; i < tope_paredes; ++i){
         int columna_auxiliar = paredes[i].col;
@@ -1181,6 +1211,7 @@ void rotar_paredes(coordenada_t paredes[MAX_PAREDES], int tope_paredes, char acc
 	}
 }
 
+//Post Ejecuta la rotacion del mapa en sentido horario de los obstaculos
 void ejecutar_rotacion_horaria_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, int desplazamiento){
     for (int i = 0; i < tope_obstaculos; ++i){
         int fila_auxiliar = obstaculos[i].posicion.fil;
@@ -1189,6 +1220,7 @@ void ejecutar_rotacion_horaria_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], i
     }
 }
 
+//Post Ejecuta la rotacion del mapa en sentido antihorario de los obstaculos
 void ejecutar_rotacion_antihoraria_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, int desplazamiento){
     for (int i = 0; i < tope_obstaculos; ++i){
         int columna_auxiliar = obstaculos[i].posicion.col;
@@ -1221,6 +1253,7 @@ void rotar_obstaculos(objeto_t obstaculos[MAX_OBSTACULOS], int tope_obstaculos, 
 	}
 }
 
+//Post Ejecuta la rotacion del mapa en sentido horario de las herramientas
 void ejecutar_rotacion_horaria_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herramientas, int desplazamiento){
     for (int i = 0; i < tope_herramientas; ++i){
         int fila_auxiliar = herramientas[i].posicion.fil;
@@ -1229,6 +1262,7 @@ void ejecutar_rotacion_horaria_herramientas(objeto_t herramientas[MAX_HERRAMIENT
     }
 }
 
+//Post Ejecuta la rotacion del mapa en sentido antihorario de las herramientas
 void ejecutar_rotacion_antihoraria_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herramientas, int desplazamiento){
     for (int i = 0; i < tope_herramientas; ++i){
         int columna_auxiliar = herramientas[i].posicion.col;
@@ -1261,6 +1295,7 @@ void rotar_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herram
 	}
 }
 
+//Post Ejecuta la rotacion del mapa en sentido horario de los papeleos
 void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
     for (int i = 0; i < tope_papeleos; ++i){
         if (!papeleos[i].recolectado){
@@ -1271,6 +1306,7 @@ void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_HERRAMIENTAS], in
     }
 }
 
+//Post Ejecuta la rotacion del mapa en sentido antihorario de los papeleos
 void ejecutar_rotacion_papeleos_antihorario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
     for (int i = 0; i < tope_papeleos; ++i){
         if(!papeleos[i].recolectado){
@@ -1305,6 +1341,7 @@ void rotar_papeleos(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, cha
 	}
 }
 
+//Post Ejecuta la rotacion correspondiente del jugador
 void ejecutar_rotacion_correspondiente(jugador_t* jugador, char accion_realizada, int limite){
     if (accion_realizada == ROTAR_MAPA_HORARIO){
         int fila_auxiliar = (*jugador).posicion.fil;
