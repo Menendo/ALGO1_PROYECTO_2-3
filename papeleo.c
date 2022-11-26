@@ -1296,7 +1296,7 @@ void rotar_herramientas(objeto_t herramientas[MAX_HERRAMIENTAS], int tope_herram
 }
 
 //Post Ejecuta la rotacion del mapa en sentido horario de los papeleos
-void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
+void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_PAPELEOS], int tope_papeleos, int desplazamiento){
     for (int i = 0; i < tope_papeleos; ++i){
         if (!papeleos[i].recolectado){
             int fila_auxiliar = papeleos[i].posicion.fil;
@@ -1307,7 +1307,7 @@ void ejecutar_rotacion_papeleos_horario(papeleo_t papeleos[MAX_HERRAMIENTAS], in
 }
 
 //Post Ejecuta la rotacion del mapa en sentido antihorario de los papeleos
-void ejecutar_rotacion_papeleos_antihorario(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, int desplazamiento){
+void ejecutar_rotacion_papeleos_antihorario(papeleo_t papeleos[MAX_PAPELEOS], int tope_papeleos, int desplazamiento){
     for (int i = 0; i < tope_papeleos; ++i){
         if(!papeleos[i].recolectado){
             int columna_auxiliar = papeleos[i].posicion.col;
@@ -1319,7 +1319,7 @@ void ejecutar_rotacion_papeleos_antihorario(papeleo_t papeleos[MAX_HERRAMIENTAS]
 
 //Pre: Debe recibir el vector de papeleos junto a su tope, la accion realizada y el nivel actual.
 //Post: Rotara los papeleos del mapa hacia el lado ingresado por el usuario
-void rotar_papeleos(papeleo_t papeleos[MAX_HERRAMIENTAS], int tope_papeleos, char accion_realizada, int nivel_actual){
+void rotar_papeleos(papeleo_t papeleos[MAX_PAPELEOS], int tope_papeleos, char accion_realizada, int nivel_actual){
 	if (nivel_actual == PRIMER_NIVEL){
 		if (accion_realizada == ROTAR_MAPA_HORARIO){
             ejecutar_rotacion_papeleos_horario(papeleos, tope_papeleos, LIMITE_POSICION_FILAS_PRIMER_NIVEL);
