@@ -1,5 +1,5 @@
 # Los Papeleos de Mike  
-Para compilar utilizar el siguiente comando: ***gcc *.c utiles.o -o juego -std=c99 -Wall -Wconversion -Werror -lm***  
+Para compilar utilizar el siguiente comando: **gcc *.c utiles.o -o juego -std=c99 -Wall -Wconversion -Werror -lm***  
 Para correr el ejecutable, utilizar el siguiente comando: ***./juego***  
 
 Llegó el momento de firmar la libreta, pero te diste cuenta que el día que está el profesor vos no podes ir. Te acordás
