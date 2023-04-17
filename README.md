@@ -1,6 +1,6 @@
 # Los Papeleos de Mike  
-Para compilar utilizar el siguiente comando: **gcc *.c utiles.o -o juego -std=c99 -Wall -Wconversion -Werror -lm***  
-Para correr el ejecutable, utilizar el siguiente comando: ***./juego***  
+Para compilar utilizar el siguiente comando dentro de la carpeta "src": **gcc *.c utiles.o -o juego -std=c99 -Wall -Wconversion -Werror -lm***  
+Para correr el ejecutable, utilizar el siguiente comando dentro de la carpeta "src": ***./juego***  
 
 Llegó el momento de firmar la libreta, pero te diste cuenta que el día que está el profesor vos no podes ir. Te acordás
 que un amigo tuyo también tiene que ir, y le pedís si te hace el favor de llevar tu libreta a firmar.
